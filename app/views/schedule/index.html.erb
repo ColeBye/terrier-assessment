@@ -1,2 +1,52 @@
-<h1>Schedule#index</h1>
-<p>Find me in app/views/schedule/index.html.erb</p>
+<!DOCTYPE html>
+<html lang="en">
+<% content_for :title do %>
+  Terrier Scheduler
+<% end %>
+
+<% content_for :head do %>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% end %>
+
+<h1>Schedule</h1>
+
+<div class="schedule-grid">
+  <div class="schedule-header">
+    <div>Time</div>
+    <div class="technician-name">Name 1</div>
+    <div class="technician-name">Name 2</div>
+  </div>
+  <div class="time-labels">
+    <div class="time-slot">9:00 AM</div>
+    <div class="time-slot">10:00 AM</div>
+  </div>
+  <div class="technician-columns">
+    <div class="technician-column" id="tech-1">
+      <div class="work-order" id="order-1">
+        <label>Time1</label>
+        <label>Loc Name, City</label>
+        <label>Price</label>
+      </div>
+      <div class="work-order" id="order-2">
+        <label>Time2</label>
+        <label>Loc Name, City</label>
+        <label>Price</label>
+      </div>
+    </div>
+    <div class="technician-column" id="tech-2">
+      <div class="work-order" id="order-3">
+        <label>Time3</label>
+        <label>Loc Name, City</label>
+        <label>Price</label>
+      </div>
+      <div class="work-order" id="order-4">
+        <label>Time4</label>
+        <label>Loc Name, City</label>
+        <label>Price</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</html>
