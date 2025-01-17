@@ -15,4 +15,12 @@ class ScheduleController < ApplicationController
       @end_hour = finish_times.max.hour + 1
     end
   end
+
+  def import
+    file = params[:file]
+
+    redirect_to schedule_index_path, alert: "No file selected" unless file
+    redirect_to schedule_index_path, notice: "CSV files only" unless file.content_type == "text/csv"
+    # redirect_to schedule_index_path, notice: "CSV Imported"
+  end
 end

@@ -9,6 +9,7 @@
 <% end %>
 
 <h1>Schedule</h1>
+<p><% notice %></p>
 
 <div class="schedule-grid">
   <div class="schedule-header">
@@ -18,7 +19,6 @@
     <% end %>
   </div>
 
-  # For loop between start and end times
   <div class="time-labels">
     <% (@end_hour - @start_hour).times do |hour|%>
       <div class="time-slot">Hour <% hour %></div>
@@ -39,6 +39,40 @@
           </div>
         <% end %>
       </div>
+    <% end %>
+  </div>
+
+
+  <form class="form" action="/schedule/import" method="post">
+    <input type="file" name="input_file"/>
+    <input type="submit" value="Input file" >
+  </form>
+
+
+  <!-- Test Display -->
+  <div id="test">
+    <h1>
+      Techs:
+      <% @technicians.count %>
+    </h1>
+    <% @technicians.each do |tech| %>
+      <% render tech %>
+    <% end %>
+
+    <h1>
+      Locs:
+      <% @locations.count %>
+    </h1>
+    <% @locations.each do |loc| %>
+      <% render loc %>
+    <% end %>
+
+    <h1>
+      WO:
+      <% @work_orders.count %>
+    </h1>
+    <% @work_orders.each do |wo| %>
+      <% render wo %>
     <% end %>
   </div>
 
