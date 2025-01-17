@@ -13,38 +13,33 @@
 <div class="schedule-grid">
   <div class="schedule-header">
     <div>Time</div>
-    <div class="technician-name">Name 1</div>
-    <div class="technician-name">Name 2</div>
+    <% @technicians.each do |technician| %>
+      <div class="technician-name"><% technician.name %></div>
+    <% end %>
   </div>
+
+  # For loop between start and end times
   <div class="time-labels">
-    <div class="time-slot">9:00 AM</div>
-    <div class="time-slot">10:00 AM</div>
+    <% (@end_hour - @start_hour).times do |hour|%>
+      <div class="time-slot">Hour <% hour %></div>
+    <% end %>
   </div>
+
   <div class="technician-columns">
-    <div class="technician-column" id="tech-1">
-      <div class="work-order" id="order-1">
-        <label>Time1</label>
-        <label>Loc Name, City</label>
-        <label>Price</label>
+    <% @technicians.each do |tech| %>
+      <div class="technician-column">
+        <% @tech_orders = WorkOrder.where(technician: tech.id) %>
+        <% @tech_orders.each do |order| %>
+          <div class="work-order">
+            <% order_location = Location.where(id: order.location) %>
+            <label><% order.date_time %></label>
+            <label><% order_location.name %></label>
+            <label><% order_location.city %></label>
+            <label><% order.price %></label>
+          </div>
+        <% end %>
       </div>
-      <div class="work-order" id="order-2">
-        <label>Time2</label>
-        <label>Loc Name, City</label>
-        <label>Price</label>
-      </div>
-    </div>
-    <div class="technician-column" id="tech-2">
-      <div class="work-order" id="order-3">
-        <label>Time3</label>
-        <label>Loc Name, City</label>
-        <label>Price</label>
-      </div>
-      <div class="work-order" id="order-4">
-        <label>Time4</label>
-        <label>Loc Name, City</label>
-        <label>Price</label>
-      </div>
-    </div>
+    <% end %>
   </div>
 
 </div>
