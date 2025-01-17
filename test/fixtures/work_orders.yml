@@ -3,13 +3,13 @@
 one:
   technician: 1
   location: 1
-  time: 2025-01-16 18:21:50
+  date_time: 2025-01-16 18:21:50
   duration: 1
   price: 1
 
 two:
   technician: 1
   location: 1
-  time: 2025-01-16 18:21:50
+  date_time: 2025-01-16 18:21:50
   duration: 1
   price: 1
