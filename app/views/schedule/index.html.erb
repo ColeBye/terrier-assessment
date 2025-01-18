@@ -10,6 +10,9 @@
 
 <h1>Schedule</h1>
 <p><%= notice %></p>
+<script>
+  console.log("TEST");
+</script>
 
 <div class="schedule-grid">
   <div class="schedule-header">
@@ -31,7 +34,7 @@
         <% @tech_orders = WorkOrder.where(technician: tech.id) %>
         <% @tech_orders.each do |order| %>
           <div class="work-order">
-            <% order_location = Location.where(id: order.location) %>
+            <% order_location = Location.where(location_idid: order.location) %>
             <label><% order.date_time %></label>
             <label><% order_location.name %></label>
             <label><% order_location.city %></label>
@@ -42,41 +45,44 @@
     <% end %>
   </div>
 
-  <%= form_with url: import_schedule_index_path, method: :post do |form| %>
+  <%= form_with url: import_schedule_index_path , method: :post do |form| %>
     <label for="work_orders">Work Orders</label>
-    <%= form.file_field :work_order_file, accept: ".csv", name: "work_orders" %>
-    <label for="technicians">Technicians</label>
-    <%= form.file_field :technician_file, accept: ".csv", name: "technicians" %>
-    <label for="locations">Locations</label>
-    <%= form.file_field :location_file, accept: ".csv", name: "locations" %>
+    <%= form.file_field :work_order_form, accept: ".csv", multipart:true %>
     <%= form.button "Import" %>
   <% end %>
+  <%#= form_with url: import_schedule_index_path , method: :post do |form| %>
+<!--    <label for="technicians">Technicians</label>-->
+    <%#= form.file_field :technician_file, accept: ".csv", name: "technicians" %>
+<!--    <label for="locations">Locations</label>-->
+    <%#= form.file_field :location_file, accept: ".csv", name: "locations" %>
+    <%#= form.button "Import" %>
+  <%# end %>
 
 
   <!-- Test Display -->
   <div id="test">
-    <h1>
-      Techs:
-      <% @technicians.count %>
-    </h1>
-    <% @technicians.each do |tech| %>
-      <% render tech %>
-    <% end %>
+<!--    <h1>-->
+<!--      Techs:-->
+      <%#= @technicians.count %>
+<!--    </h1>-->
+    <%# @technicians.each do |tech| %>
+      <%#= render tech %>
+    <%# end %>
 
-    <h1>
-      Locs:
-      <% @locations.count %>
-    </h1>
-    <% @locations.each do |loc| %>
-      <% render loc %>
-    <% end %>
+<!--    <h1>-->
+<!--      Locs:-->
+      <%#= @locations.count %>
+<!--    </h1>-->
+    <%# @locations.each do |loc| %>
+      <%#= render loc %>
+    <%# end %>
 
     <h1>
       WO:
-      <% @work_orders.count %>
+      <%= @work_orders.count %>
     </h1>
     <% @work_orders.each do |wo| %>
-      <% render wo %>
+      <%= wo.order_id %>
     <% end %>
   </div>
 

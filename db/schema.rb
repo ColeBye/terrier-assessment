@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_17_021439) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_004904) do
   create_table "locations", force: :cascade do |t|
     t.text "name"
     t.text "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "location_id"
   end
 
   create_table "technicians", force: :cascade do |t|
     t.text "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "technician_id"
   end
 
   create_table "test_models", force: :cascade do |t|
@@ -37,5 +39,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_17_021439) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "date_time"
+    t.integer "order_id"
   end
 end
