@@ -14,6 +14,9 @@
     console.log("TEST");
   </script>
 
+  <a href="#">Updates <span class="badge">2</span></a>
+  <button type="button" class="btn btn-primary">Primary <span class="badge">7</span></button>
+
   <div class="schedule-grid">
     <div class="schedule-header">
       <div>Time</div>
@@ -57,6 +60,7 @@
       <%= form.file_field :location_form, accept: ".csv" %>
       <%= form.button "Import" %>
     <% end %>
+    <span class="label label-warning">Warning Label</span>
   </div>
 
 </html>
