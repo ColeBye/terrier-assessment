@@ -46,17 +46,6 @@
         </div>
       <% end %>
     </div>
-
-    <%= form_with url: import_schedule_index_path , method: :post do |form| %>
-      <label for="work_orders">Work Orders</label>
-      <%= form.file_field :work_order_form, accept: ".csv" %>
-      <label for="technicians">Technicians</label>
-      <%= form.file_field :technician_form, accept: ".csv" %>
-      <label for="locations">Locations</label>
-      <%= form.file_field :location_form, accept: ".csv" %>
-      <%= form.button "Import" %>
-    <% end %>
-    <span class="label label-warning">Warning Label</span>
   </div>
 
 </html>

@@ -1,0 +1,22 @@
+<% content_for :title do %>
+  Terrier Scheduler Rake
+<% end %>
+<p><%= notice %></p>
+<div class="well">
+  <%= form_with url: import_schedule_index_path , method: :post do |form| %>
+    <div class="form-group">
+      <label for="work_orders">Work Orders</label>
+      <%= form.file_field :work_order_form, accept: ".csv" %>
+    </div>
+    <div class="form-group">
+      <label for="technicians">Technicians</label>
+      <%= form.file_field :technician_form, accept: ".csv" %>
+    </div>
+    <div class="form-group">
+      <label for="locations">Locations</label>
+      <%= form.file_field :location_form, accept: ".csv" %>
+    </div>
+
+    <%= form.button "Import" %>
+  <% end %>
+</div>

@@ -32,4 +32,7 @@ class ScheduleController < ApplicationController
 
     redirect_to schedule_index_path, notice: "CSV Imported"
   end
+
+  def rake
+  end
 end
