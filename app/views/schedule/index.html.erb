@@ -1,47 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<% content_for :title do %>
-  Terrier Scheduler
-<% end %>
+  <% content_for :title do %>
+    Terrier Scheduler
+  <% end %>
 
-<% content_for :head do %>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<% end %>
+  <div class="schedule-grid">
+    <div class="schedule-header">
+      <div>Time</div>
+      <% @technicians.each do |technician| %>
+        <div class="technician-name"><% technician.name %></div>
+      <% end %>
+    </div>
 
-<h1>Schedule</h1>
+    <div class="time-labels">
+      <% (@end_hour - @start_hour).times do |hour|%>
+        <div class="time-slot">Hour <%= hour + @start_hour %></div>
+      <% end %>
+    </div>
 
-<div class="schedule-grid">
-  <div class="schedule-header">
-    <div>Time</div>
-    <% @technicians.each do |technician| %>
-      <div class="technician-name"><% technician.name %></div>
-    <% end %>
+    <div class="technician-columns">
+      <% @technicians.each do |tech| %>
+        <label><%= tech.name %></label>
+        <div class="technician-column">
+          <% tech_orders = WorkOrder.where(technician: tech.technician_id) %>
+          <% tech_orders.each do |order| %>
+            <div class="work-order">
+              <% order_location = Location.where(location_id: order.location).first %>
+                <label><%= order.date_time %></label>
+                <label><%= order_location.name %></label>
+                <label><%= order_location.city %></label>
+                <label><%= order.price %></label>
+            </div>
+            <% unless order == tech_orders.last %>
+              <div class="open-time">
+                <label>OPEN TIME</label>
+              </div>
+            <% end %>
+
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  # For loop between start and end times
-  <div class="time-labels">
-    <% (@end_hour - @start_hour).times do |hour|%>
-      <div class="time-slot">Hour <% hour %></div>
-    <% end %>
-  </div>
-
-  <div class="technician-columns">
-    <% @technicians.each do |tech| %>
-      <div class="technician-column">
-        <% @tech_orders = WorkOrder.where(technician: tech.id) %>
-        <% @tech_orders.each do |order| %>
-          <div class="work-order">
-            <% order_location = Location.where(id: order.location) %>
-            <label><% order.date_time %></label>
-            <label><% order_location.name %></label>
-            <label><% order_location.city %></label>
-            <label><% order.price %></label>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-</div>
 
 </html>

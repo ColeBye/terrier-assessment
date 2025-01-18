@@ -1,0 +1,19 @@
+<% content_for :title do %>
+  Terrier Scheduler Rake
+<% end %>
+<div class="d-inline-flex flex-column m-2 p-2">
+  <%= form_with url: import_schedule_index_path , method: :post, class:"p-3", height:1 do |form| %>
+
+  <label for="work_orders" class="d-flex flex-column mb-2">Work Orders</label>
+  <%= form.file_field :work_order_form, accept: ".csv", class: "d-flex flex-column", id:"work_orders" %>
+
+  <label for="technicians" class="d-flex flex-column mt-4 mb-2">Technicians</label>
+  <%= form.file_field :technician_form, accept: ".csv", class: "d-flex flex-column" %>
+
+  <label for="locations" class="d-flex flex-column mt-4 mb-2">Locations</label>
+  <%= form.file_field :location_form, accept: ".csv", class: "d-flex flex-column", id:"locations" %>
+
+  <%= form.button "Import" , class:"btn btn-primary mt-3 mr-2 "%>
+  <small class="d-flex text-danger"><%= notice %></small>
+  <% end %>
+</div>
