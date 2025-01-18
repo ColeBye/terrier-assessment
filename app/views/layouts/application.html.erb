@@ -25,13 +25,16 @@
 
 
 <body>
-<nav class="navbar">
-  <ul >
-    <li>
-      <a class="navbar-brand" href=<%=  schedule_index_path %>>Schedule</a>
+<nav class="navbar navbar-static-top navbar-expand-sm navbar-dark bg-dark p-3 mb-50 ">
+  <div class="d-inline-block align-top pl-5">
+    <%= image_tag "rails.png", alt: "rails logo", width: 50, height: 50 %>
+  </div>
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a href="<%= schedule_index_path %>" class="nav-link">Schedule</a>
     </li>
-    <li class="btn-default">
-      <a class="btn" href=<%= rake_schedule_index_path %>>Rake</a>
+    <li class="nav-item active">
+      <a href="<%= rake_schedule_index_path %>" class="nav-link">Rake</a>
     </li>
   </ul>
 </nav>
