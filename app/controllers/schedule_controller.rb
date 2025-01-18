@@ -24,8 +24,9 @@ class ScheduleController < ApplicationController
     location_form = params[:location_form]
     # params.except(:work_order_file, :technician_form, :location_form)
 
-    # return redirect_to schedule_index_path, notice: "Missing File/s" unless work_order_file # && technician_file && location_file
-    return redirect_to schedule_index_path, notice: "CSV files only" unless work_order_form.content_type == "text/csv" && technician_form.content_type == "text/csv" && location_form.content_type == "text/csv"
+
+    return redirect_to schedule_index_path, notice: "Missing File/s" unless work_order_form && technician_form && location_form
+    return redirect_to schedule_index_path, notice: "CSV files only!" unless work_order_form.content_type == "text/csv" && technician_form.content_type == "text/csv" && location_form.content_type == "text/csv"
 
     CsvImportService.new.call(work_order_form, technician_form, location_form)
 

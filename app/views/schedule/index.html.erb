@@ -1,91 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<% content_for :title do %>
-  Terrier Scheduler
-<% end %>
-
-<% content_for :head do %>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<% end %>
-
-<h1>Schedule</h1>
-<p><%= notice %></p>
-<script>
-  console.log("TEST");
-</script>
-
-<div class="schedule-grid">
-  <div class="schedule-header">
-    <div>Time</div>
-    <% @technicians.each do |technician| %>
-      <div class="technician-name"><% technician.name %></div>
-    <% end %>
-  </div>
-
-  <div class="time-labels">
-    <% (@end_hour - @start_hour).times do |hour|%>
-      <div class="time-slot">Hour <% hour %></div>
-    <% end %>
-  </div>
-
-  <div class="technician-columns">
-    <% @technicians.each do |tech| %>
-      <label><%= tech.name %></label>
-      <div class="technician-column">
-        <% tech_orders = WorkOrder.where(technician: tech.technician_id) %>
-        <% tech_orders.each do |order| %>
-          <label><%= order.duration %></label>
-          <label><%= order.location %></label>
-          <div class="work-order">
-            <% order_location = Location.where(location_id: order.location).first %>
-              <label><%= order.date_time %></label>
-              <label><%= order_location.name %></label>
-              <label><%= order_location.city %></label>
-              <label><%= order.price %></label>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <%= form_with url: import_schedule_index_path , method: :post do |form| %>
-    <label for="work_orders">Work Orders</label>
-    <%= form.file_field :work_order_form, accept: ".csv" %>
-    <label for="technicians">Technicians</label>
-    <%= form.file_field :technician_form, accept: ".csv" %>
-    <label for="locations">Locations</label>
-    <%= form.file_field :location_form, accept: ".csv" %>
-    <%= form.button "Import" %>
+  <% content_for :title do %>
+    Terrier Scheduler
   <% end %>
 
+  <% content_for :head do %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <% end %>
 
-  <!-- Test Display -->
-  <div id="test">
-<!--    <h1>-->
-<!--      Techs:-->
-      <%#= @technicians.count %>
-<!--    </h1>-->
-    <%# @technicians.each do |tech| %>
-      <%#= render tech %>
-    <%# end %>
+  <h1>Schedule</h1>
+  <p><%= notice %></p>
+  <script>
+    console.log("TEST");
+  </script>
 
-<!--    <h1>-->
-<!--      Locs:-->
-      <%#= @locations.count %>
-<!--    </h1>-->
-    <%# @locations.each do |loc| %>
-      <%#= render loc %>
-    <%# end %>
+  <div class="schedule-grid">
+    <div class="schedule-header">
+      <div>Time</div>
+      <% @technicians.each do |technician| %>
+        <div class="technician-name"><% technician.name %></div>
+      <% end %>
+    </div>
 
-    <h1>
-      WO:
-      <%= @work_orders.count %>
-    </h1>
-    <% @work_orders.each do |wo| %>
-      <%= wo.order_id %>
+    <div class="time-labels">
+      <% (@end_hour - @start_hour).times do |hour|%>
+        <div class="time-slot">Hour <% hour %></div>
+      <% end %>
+    </div>
+
+    <div class="technician-columns">
+      <% @technicians.each do |tech| %>
+        <label><%= tech.name %></label>
+        <div class="technician-column">
+          <% tech_orders = WorkOrder.where(technician: tech.technician_id) %>
+          <% tech_orders.each do |order| %>
+            <label><%= order.duration %></label>
+            <label><%= order.location %></label>
+            <div class="work-order">
+              <% order_location = Location.where(location_id: order.location).first %>
+                <label><%= order.date_time %></label>
+                <label><%= order_location.name %></label>
+                <label><%= order_location.city %></label>
+                <label><%= order.price %></label>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form_with url: import_schedule_index_path , method: :post do |form| %>
+      <label for="work_orders">Work Orders</label>
+      <%= form.file_field :work_order_form, accept: ".csv" %>
+      <label for="technicians">Technicians</label>
+      <%= form.file_field :technician_form, accept: ".csv" %>
+      <label for="locations">Locations</label>
+      <%= form.file_field :location_form, accept: ".csv" %>
+      <%= form.button "Import" %>
     <% end %>
   </div>
-
-</div>
 
 </html>
