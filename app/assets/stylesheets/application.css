@@ -35,7 +35,7 @@
 }
 
 .axis-holder {
-    display: grid;
+    /*display: grid;*/
     grid-template-rows: 5rem 1fr;
     grid-template-columns: 7rem 1fr;
     background-color: lightgray;
@@ -107,3 +107,13 @@
     font-weight: bold;
 }
 
+    .empty-page {
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+
+.empty-card {
+    display: flex;
+
+}

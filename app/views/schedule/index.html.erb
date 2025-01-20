@@ -34,6 +34,13 @@
     Terrier Scheduler
   <% end %>
 
+  <div class="empty-page" style="display: <%= (@work_orders.count == 0)? "flex" : "none" %>">
+    <div class="empty-card card">
+      <div class="card card-header">Database Empty!</div>
+      <div class="card card-body">Use the rake page to fill out the schedule</div>
+    </div>
+  </div>
+
   <div class="modal" id="myModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -48,10 +55,15 @@
     </div>
   </div>
 
-  <div class="axis-holder  border rounded">
+  <div class="axis-holder border rounded" style="display: <%= (@work_orders.count == 0)? "none" : "grid" %>">
 
     <div class="corner-square card rounded-0 bg-light">
-      <label><%= @work_orders.first.date_time.month %> / <%= @work_orders.first.date_time.day %></label>
+      <label>
+        <% if @work_orders.count > 0 %>
+          <%= @work_orders.first.date_time.month %> / <%= @work_orders.first.date_time.day %>
+        <% end %>
+
+      </label>
     </div>
 
     <div class="x-axis card-group">
