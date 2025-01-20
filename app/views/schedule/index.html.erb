@@ -1,155 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-  <script>
-    function popModal(context, total_minutes) {
-        document.getElementById("myModal").style.display = "block";
-        document.getElementById("modal-context").innerText = context;
+<script>
+  function openModal(context, total_minutes) {
+      document.getElementById("myModal").style.display = "block";
+      document.getElementById("modal-context").innerText = context;
 
-        let free_time = ""
-        let hours = Math.floor(total_minutes / 60);
-        let minutes = total_minutes % 60
-        if (hours > 1) {
-            free_time += hours + " hours ";
-        }
-        else if (hours === 1) {
-            free_time += "1 hour ";
-        }
-        if (minutes > 1) {
-            free_time += minutes + " minutes";
-        }
-        if (minutes === 1) {
-            free_time += "1 minute";
-        }
+      // Crafts formatted time output
+      let free_time = "";
+      let hours = Math.floor(total_minutes / 60);
+      let minutes = total_minutes % 60;
 
-        document.getElementById("modal-minutes").innerText = free_time;
-    }
-    function closeModal() {
-        document.getElementById("myModal").style.display = "none";
-    }
+      if (hours > 1) { free_time += hours + " hours "; }
+      else if (hours === 1) { free_time += "1 hour "; }
 
-  </script>
+      if (minutes > 1) { free_time += minutes + " minutes";        }
+      else if (minutes === 1) { free_time += "1 minute"; }
 
+      document.getElementById("modal-minutes").innerText = free_time;
+  }
+  function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+  }
+</script>
 
-  <% content_for :title do %>
-    Terrier Scheduler
-  <% end %>
+<% content_for :title do %>
+  Terrier Scheduler
+<% end %>
 
-  <div class="empty-page" style="display: <%= (@work_orders.count == 0)? "flex" : "none" %>">
-    <div class="empty-card card">
-      <div class="card card-header">Database Empty!</div>
-      <div class="card card-body">Use the rake page to fill out the schedule</div>
-    </div>
+<!-- Display for page with empty database -->
+<div class="empty-page" style="display: <%= (@work_orders.count == 0) ? "flex" : "none" %>">
+  <div class="card">
+    <div class="card card-header">Database Empty!</div>
+    <div class="card card-body">Use the rake page to fill out the schedule</div>
   </div>
+</div>
 
-  <div class="modal" id="myModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal-context">Modal Title</h5>
-          <button type="button" class="btn-close" onclick="closeModal()" ></button>
-        </div>
-        <div class="modal-body" id="modal-minutes">
-          <p>Modal Body</p>
-        </div>
+<!-- Modal for pop-up behavior -->
+<div class="modal modal-sm" id="myModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-context">Modal Title</h5>
+        <button type="button" class="btn-close" onclick="closeModal()" ></button>
+      </div>
+      <div class="modal-body" id="modal-minutes">
+        <p>Modal Body</p>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="axis-holder border rounded" style="display: <%= (@work_orders.count == 0)? "none" : "grid" %>">
+<!-- Grid for schedule layout -->
+<div class="schedule-grid border rounded" style="display: <%= (@work_orders.count == 0)? "none" : "grid" %>">
+  <!-- Date display -->
+  <div class="date-corner card rounded-0 bg-light">
+    <label>
+      <% if @work_orders.count > 0 %>
+        <%= @work_orders.first.date_time.month %> / <%= @work_orders.first.date_time.day %>
+      <% end %>
+    </label>
+  </div>
 
-    <div class="corner-square card rounded-0 bg-light">
-      <label>
-        <% if @work_orders.count > 0 %>
-          <%= @work_orders.first.date_time.month %> / <%= @work_orders.first.date_time.day %>
+  <!-- Technician name axis labels -->
+  <div class="x-axis card-group">
+      <% @technicians.each do |technician| %>
+              <div class="technician-name card rounded-0 p-0 bg-light"><%= technician.name %></div>
+      <% end %>
+  </div>
+
+  <!-- Time axis labels -->
+  <div class="y-axis">
+    <div class="time-labels">
+      <% (@end_hour - @start_hour).times do |hour|%>
+        <% if hour + @start_hour == 0 %>
+          <div class="time-slot card rounded-0 bg-light">12:00 AM</div>
+        <% elsif hour + @start_hour == 12 %>
+          <div class="time-slot card rounded-0 bg-light">12:00 PM</div>
+        <% elsif hour + @start_hour < 12 %>
+          <div class="time-slot card rounded-0 bg-light"><%= (hour + @start_hour) %>:00 AM</div>
+        <% else %>
+          <div class="time-slot card rounded-0 bg-light"><%= (hour + @start_hour) % 12 %>:00 PM</div>
         <% end %>
-
-      </label>
+      <% end %>
     </div>
+  </div>
 
-    <div class="x-axis card-group">
-        <% @technicians.each do |technician| %>
-                <div class="technician-name card rounded-0 p-0 bg-light"><%= technician.name %></div>
-        <% end %>
-    </div>
+  <!-- Work orders display -->
+  <div class="order-grid">
+    <!-- Technician column -->
+    <% @technicians.each do |tech| %>
+      <div class="tech-column border border-left border-right">
+        <%# Loops for each work order matching the current technician %>
+        <% tech_orders = WorkOrder.where(technician: tech.technician_id).sort_by { |work_order| work_order.date_time + (work_order.duration * 60) } %>
+        <% tech_orders.each_with_index do |work_order, i| %>
 
-    <div class="y-axis">
-      <div class="time-labels">
-        <% (@end_hour - @start_hour).times do |hour|%>
-          <% if hour + @start_hour == 0 %>
-            <div class="time-slot card rounded-0 bg-light">12:00 AM</div>
-          <% elsif hour + @start_hour == 12 %>
-            <div class="time-slot card rounded-0 bg-light">12:00 PM</div>
-          <% elsif hour + @start_hour < 12 %>
-            <div class="time-slot card rounded-0 bg-light"><%= (hour + @start_hour) %>:00 AM</div>
-          <% else %>
-            <div class="time-slot card rounded-0 bg-light"><%= (hour + @start_hour) % 12 %>:00 PM</div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-    <div class="new-grid">
-      <% @technicians.each do |tech| %>
-      <div class="new-column border border-left border-right">
-        <% tech_orders = WorkOrder.where(technician: tech.technician_id).sort_by { |w| w.date_time + (w.duration * 60) } %>
-        <% tech_orders.each_with_index do |wo, i| %>
-          <!-- Start open block -->
-          <% if wo == tech_orders.first && wo.date_time.seconds_since_midnight >  @start_hour * 3600 %>
-            <% free_duration = wo.date_time.seconds_since_midnight - (@start_hour * 3600)%>
-            <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time to start:\n', parseInt(this.children[0].innerText))">
+          <!-- Open time block from start of day to first work order -->
+          <% if work_order == tech_orders.first && work_order.date_time.seconds_since_midnight >  @start_hour * 3600 %>
+            <% free_duration = work_order.date_time.seconds_since_midnight - (@start_hour * 3600)%>
+            <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="openModal('Time from start:\n', parseInt(this.children[0].innerText))">
               <label><%= (free_duration / 60).to_i %></label>
             </div>
           <% end %>
 
-          <!-- Not last case -->
-          <% if wo != tech_orders.last %>
-            <% free_duration = tech_orders[i + 1].date_time.seconds_since_midnight - (wo.date_time.seconds_since_midnight + (wo.duration * 60))%>
+          <%# Not technicians last order case %>
+          <% if work_order != tech_orders.last %>
+            <%# Calculate time until next event %>
+            <% free_duration = tech_orders[i + 1].date_time.seconds_since_midnight - (work_order.date_time.seconds_since_midnight + (work_order.duration * 60))%>
+
+            <%# Case for event conflict %>
             <% if free_duration < 0 %>
-              <!-- Overwritten by conflict case -->
-              <div class="new-wo card bg-danger " style="height: <%= ((wo.duration / 60.0 ) + (free_duration / 3600)) * 8 %>rem">
-                <% order_location = Location.where(location_id: wo.location).first %>
+              <!-- Conflicted event being overwritten -->
+              <div class="work-order card bg-danger " style="height: <%= ((work_order.duration / 60.0 ) + (free_duration / 3600)) * 8 %>rem">
+                <% order_location = Location.where(location_id: work_order.location).first %>
                 <label >Conflict Detected!</label>
-                <label class="card-time"><%= wo.date_time.strftime("%r") %></label>
+                <label class="card-time"><%= work_order.date_time.strftime("%r") %></label>
                 <label class="card-name"><%= order_location.name %></label>
                 <label class="card-city text-truncate"><%= order_location.city %></label>
-                <label class="card-price">$<%= wo.price %></label>
+                <label class="card-price">$<%= work_order.price %></label>
               </div>
             <% else %>
-              <!-- Normal Event block -->
-              <div class="new-wo card" style="height: <%= wo.duration * 8 / 60%>rem">
-                <% order_location = Location.where(location_id: wo.location).first %>
-                <label class="card-time bold"><%= wo.date_time.strftime("%r") %></label>
+
+              <%# Case with no conflict %>
+              <!-- Work order event -->
+              <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem">
+                <% order_location = Location.where(location_id: work_order.location).first %>
+                <label class="card-time bold"><%= work_order.date_time.strftime("%r") %></label>
                 <label class="card-name text-muted"><%= order_location.name %></label>
                 <label class="card-city"><%= order_location.city %></label>
-                <label class="card-price">$<%= wo.price %></label>
+                <label class="card-price">$<%= work_order.price %></label>
               </div>
-              <% if free_duration > 0%>
-                <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time between events:\n', parseInt(this.children[0].innerText))">
+
+              <% if free_duration > 0 %>
+                <!-- Open time to next event -->
+                <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="openModal('Time between events:\n', parseInt(this.children[0].innerText))">
                   <label><%= (free_duration / 60).to_i %></label>
                 </div>
               <% end %>
             <% end %>
-          <!-- Last case -->
+
+          <%# Technicians last order case %>
           <% else %>
-            <!-- Normal Event block -->
-            <div class="new-wo card" style="height: <%= wo.duration * 8 / 60%>rem">
-              <% order_location = Location.where(location_id: wo.location).first %>
-              <label class="card-time"><%= wo.date_time.strftime("%r") %></label>
+            <!-- Work order event -->
+            <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem">
+              <% order_location = Location.where(location_id: work_order.location).first %>
+              <label class="card-time"><%= work_order.date_time.strftime("%r") %></label>
               <label class="card-name"><%= order_location.name %></label>
               <label class="card-city"><%= order_location.city %></label>
-              <label class="card-price">$<%= wo.price %></label>
+              <label class="card-price">$<%= work_order.price %></label>
             </div>
-            <!-- End open block -->
-            <% if wo.date_time.seconds_since_midnight + (wo.duration * 60) < @end_hour * 3600%>
-              <% free_duration = @end_hour * 3600 - (wo.date_time.seconds_since_midnight + (wo.duration * 60))%>
-              <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time to end:\n', parseInt(this.children[0].innerText))">
+            <!-- Open block from last event to end of day -->
+            <% if work_order.date_time.seconds_since_midnight + (work_order.duration * 60) < @end_hour * 3600%>
+              <% free_duration = @end_hour * 3600 - (work_order.date_time.seconds_since_midnight + (work_order.duration * 60))%>
+              <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="openModal('Time to end:\n', parseInt(this.children[0].innerText))">
                 <label><%= (free_duration / 60).to_i %></label>
               </div>
             <% end %>
           <% end %>
         <% end %>
       </div>
-      <% end %>
-    </div>
+    <% end %>
   </div>
+</div>
 
-</html>
+

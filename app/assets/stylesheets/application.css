@@ -27,15 +27,16 @@
 }
 
 .work-order {
-
+    display: flex;
+    padding-left: 3px;
+    min-height: fit-content;
 }
 
 .open-time {
     opacity: 0;
 }
 
-.axis-holder {
-    /*display: grid;*/
+.schedule-grid {
     grid-template-rows: 5rem 1fr;
     grid-template-columns: 7rem 1fr;
     background-color: lightgray;
@@ -43,27 +44,21 @@
 
 }
 
-.new-grid {
+.order-grid {
     display: flex;
     grid-row: 2;
     grid-column: 2;
 
 }
 
-.new-column {
+.tech-column {
     display: flex;
     flex-direction: column;
     flex: 1;
     background-color: #ececec;
 }
 
-.new-wo{
-    display: flex;
-    padding-left: 3px;
-    min-height: fit-content;
-}
-
-.corner-square {
+.date-corner {
     grid-row: 1;
     grid-column: 1;
     display: flex;
@@ -107,13 +102,8 @@
     font-weight: bold;
 }
 
-    .empty-page {
-        justify-content: center;
-        align-items: center;
-        height: 90vh;
-    }
-
-.empty-card {
-    display: flex;
-
+.empty-page {
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
 }
