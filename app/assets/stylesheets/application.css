@@ -92,4 +92,9 @@
     margin-bottom: 2px;
     margin-right: 2px;
     font-weight: bold;
+    overflow: visible;
+}
+
+.card {
+    overflow: scroll;
 }

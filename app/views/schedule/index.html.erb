@@ -113,7 +113,7 @@
                 <label >Conflict Detected!</label>
                 <label class="card-time"><%= work_order.date_time.strftime("%r") %></label>
                 <label class="card-name"><%= order_location.name %></label>
-                <label class="card-city text-truncate"><%= order_location.city %></label>
+                <label class="card-city"><%= order_location.city %></label>
                 <label class="card-price">$<%= work_order.price %></label>
               </div>
             <% else %>
