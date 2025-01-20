@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root "schedule#index"
+  get "schedule/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :schedule do
     collection do
       post :import
       get :rake
-      get "/index" => "schedule#index", as: :schedule_index_path
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
