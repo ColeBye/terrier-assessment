@@ -4,55 +4,10 @@
     Terrier Scheduler
   <% end %>
 
-<!--  <div class="schedule-grid container-fluid" style="grid-template-columns: 7rem repeat(<%#= @technicians.count %>, 500px); grid-template-rows:repeat(<%#= (@end_hour - @start_hour) * 3600%>, <%#= 7.0/3600.0 %>rem);">-->
-<!--    <div class="schedule-header card-group">-->
-<!--      <label style="width: 7rem;">Time</label>-->
-      <%# @technicians.each_with_index do |technician, i| %>
-<!--        <div class="technician-name card text-center" style="grid-row:<%#= i + 1 %>;"><%#= technician.name %></div>-->
-      <%# end %>
-<!--    </div>-->
-
-<!--    <div class="time-labels">-->
-      <%# (@end_hour - @start_hour).times do |hour|%>
-        <%# if hour + @start_hour == 0 %>
-<!--          <div class="time-slot card text-center">12:00 AM</div>-->
-        <%# elsif hour + @start_hour == 12 %>
-<!--          <div class="time-slot card text-center">12:00 PM</div>-->
-        <%# elsif hour + @start_hour < 12 %>
-<!--          <div class="time-slot card text-center"><%#= (hour + @start_hour) %>:00 AM</div>-->
-        <%# else %>
-<!--          <div class="time-slot card text-center"><%#= (hour + @start_hour) % 12 %>:00 PM</div>-->
-        <%# end %>
-      <%# end %>
-<!--    </div>-->
-
-<!--    <div class="technician-columns" style="grid-template-columns: 7rem repeat(<%#= @technicians.count %>, 500px); grid-template-rows:repeat(<%#= (@end_hour - @start_hour) * 3600%>, <%#= 7.0/3600.0 %>rem);">-->
-      <%# @technicians.each_with_index do |tech, i| %>
-<!--        <div class="technician-column" >-->
-          <%# tech_orders = WorkOrder.where(technician: tech.technician_id) %>
-          <%# tech_orders.each do |order| %>
-<!--            <div class="work-order card" style="grid-column:<%#= i + 1 %>; grid-row-start: <%#= order.date_time.seconds_since_midnight - (@start_hour * 3600) %>; grid-row-end: <%#= order.date_time.seconds_since_midnight - (@start_hour * 3600) + (order.duration * 60) %>;">-->
-              <%# order_location = Location.where(location_id: order.location).first %>
-<!--                <label><%#= order.date_time %></label>-->
-<!--                <label><%#= order_location.name %></label>-->
-<!--                <label><%#= order_location.city %></label>-->
-<!--                <label><%#= order.price %></label>-->
-<!--            </div>-->
-            <%# unless order == tech_orders.last %>
-<!--              <div class="open-time card ">-->
-<!--                <label>OPEN TIME</label>-->
-<!--              </div>-->
-            <%# end %>
-
-          <%# end %>
-<!--        </div>-->
-      <%# end %>
-<!--    </div>-->
-<!--  </div>-->
   <div class="axis-holder">
     <div class="x-axis">
-        <% @technicians.each_with_index do |technician, i| %>
-                <div class="technician-name card" >Tech Name</div>
+        <% @technicians.each do |technician| %>
+                <div class="technician-name card"><%= technician.name %></div>
         <% end %>
     </div>
 
@@ -74,26 +29,66 @@
     <div class="new-grid">
       <% @technicians.each do |tech| %>
       <div class="new-column">
-        <% tech_orders = WorkOrder.where(technician: tech.technician_id) %>
-        <% tech_orders.each do |wo| %>
-          <div class="new-wo card" style="height: <%= wo.duration * 8 / 60%>rem">
-            <label><%= wo.date_time %></label>
-            <label>Line 2</label>
-            <label>Line 3</label>
-            <label>Line 4</label>
-          </div>
-          <% unless wo == tech_orders.last %>
-            <% free_duration = 10 %>
-            <div class="open-time card" style="height: <%= free_duration %>px">
+        <% tech_orders = WorkOrder.where(technician: tech.technician_id).sort_by { |w| w.date_time + (w.duration * 60)} %>
+        <% tech_orders.each_with_index do |wo, i| %>
+          <!-- Start open block -->
+          <% if wo == tech_orders.first && wo.date_time.seconds_since_midnight >  @start_hour * 3600 %>
+            <% free_duration = wo.date_time.seconds_since_midnight - (@start_hour * 3600)%>
+            <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
               <label>OPEN TIME</label>
             </div>
           <% end %>
+
+          <!-- Not last case -->
+          <% if wo != tech_orders.last %>
+            <% free_duration = tech_orders[i + 1].date_time.seconds_since_midnight - (wo.date_time.seconds_since_midnight + (wo.duration * 60))%>
+            <% if free_duration < 0 %>
+              <!-- Overwritten by conflict case -->
+              <div class="new-wo card text-danger " style="height: <%= ((wo.duration / 60.0 ) + (free_duration / 3600)) * 8 %>rem">
+                <% order_location = Location.where(location_id: wo.location).first %>
+                <label>Conflict Detected!</label>
+                <label><%= wo.date_time %></label>
+                <label><%= order_location.name %></label>
+                <label><%= order_location.city %></label>
+                <label><%= wo.price %></label>
+              </div>
+            <% else %>
+              <!-- Normal Event block -->
+              <div class="new-wo card" style="height: <%= wo.duration * 8 / 60%>rem">
+                <% order_location = Location.where(location_id: wo.location).first %>
+                <label><%= wo.date_time %></label>
+                <label><%= order_location.name %></label>
+                <label><%= order_location.city %></label>
+                <label><%= wo.price %></label>
+              </div>
+              <% if free_duration > 0%>
+                <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
+                  <label><%= free_duration / 60 %></label>
+                </div>
+              <% end %>
+            <% end %>
+          <!-- Last case -->
+          <% else %>
+            <!-- Normal Event block -->
+            <div class="new-wo card" style="height: <%= wo.duration * 8 / 60%>rem">
+              <% order_location = Location.where(location_id: wo.location).first %>
+              <label><%= wo.date_time %></label>
+              <label><%= order_location.name %></label>
+              <label><%= order_location.city %></label>
+              <label><%= wo.price %></label>
+            </div>
+            <!-- End open block -->
+            <% if wo.date_time.seconds_since_midnight + (wo.duration * 60) < @end_hour * 3600%>
+              <% free_duration = @end_hour * 3600 - (wo.date_time.seconds_since_midnight + (wo.duration * 60))%>
+              <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
+                <label>OPEN TIMES</label>
+              </div>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
-    <% end %>
-  </div>
-
-
+      <% end %>
+    </div>
   </div>
 
 </html>
