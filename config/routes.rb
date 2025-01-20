@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root "schedule#index"
   get "schedule/index"
-  get "schedule/rake"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :schedule do
     collection do

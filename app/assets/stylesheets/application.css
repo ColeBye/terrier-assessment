@@ -9,14 +9,23 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
-.time-slot {
-    font-weight: bold;
-    width: 7rem;
-    min-width: 7rem;
-    min-height: 8rem;
+.empty-page {
     justify-content: center;
     align-items: center;
-    /*flex-direction: column;*/
+    height: 90vh;
+}
+
+.schedule-grid {
+    grid-template-rows: 5rem 1fr;
+    grid-template-columns: 7rem 1fr;
+    background-color: lightgray;
+    margin: 5vmin;
+}
+
+.x-axis {
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
 }
 
 .technician-name {
@@ -26,57 +35,6 @@
     flex-grow: 1;
 }
 
-.work-order {
-
-}
-
-.open-time {
-    opacity: 0;
-}
-
-.axis-holder {
-    display: grid;
-    grid-template-rows: 5rem 1fr;
-    grid-template-columns: 7rem 1fr;
-    background-color: lightgray;
-    margin: 5vmin;
-
-}
-
-.new-grid {
-    display: flex;
-    grid-row: 2;
-    grid-column: 2;
-
-}
-
-.new-column {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    background-color: #ececec;
-}
-
-.new-wo{
-    display: flex;
-    padding-left: 3px;
-    min-height: fit-content;
-}
-
-.corner-square {
-    grid-row: 1;
-    grid-column: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 1000;
-}
-
-.x-axis {
-    grid-row: 1;
-    grid-column: 2;
-    display: flex;
-}
 .y-axis {
     grid-row: 2;
     grid-column: 1;
@@ -85,16 +43,45 @@
     flex: 1;
 }
 
-.card-time {
-
+.time-slot {
+    font-weight: bold;
+    width: 7rem;
+    min-width: 7rem;
+    min-height: 8rem;
+    justify-content: center;
+    align-items: center;
 }
 
-.card-name {
-
+.date-corner {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 1000;
 }
 
-.card-city {
+.order-grid {
+    display: flex;
+    grid-row: 2;
+    grid-column: 2;
+}
 
+.tech-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #ececec;
+}
+
+.work-order {
+    display: flex;
+    padding-left: 3px;
+    min-height: fit-content;
+}
+
+.open-time {
+    opacity: 0;
 }
 
 .card-price {
@@ -105,4 +92,9 @@
     margin-bottom: 2px;
     margin-right: 2px;
     font-weight: bold;
+    overflow: visible;
+}
+
+.card {
+    overflow: scroll;
 }

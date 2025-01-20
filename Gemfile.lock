@@ -151,6 +151,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.4)
     msgpack (1.7.5)
+    mutex_m (0.3.0)
     net-imap (0.5.5)
       date
       net-protocol
@@ -356,6 +357,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   kamal
+  mutex_m
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.0, >= 8.0.0.1)
