@@ -34,7 +34,7 @@
     <div class="new-grid">
       <% @technicians.each do |tech| %>
       <div class="new-column border border-left border-right">
-        <% tech_orders = WorkOrder.where(technician: tech.technician_id).sort_by { |w| w.date_time + (w.duration * 60)} %>
+        <% tech_orders = WorkOrder.where(technician: tech.technician_id).sort_by { |w| w.date_time + (w.duration * 60) } %>
         <% tech_orders.each_with_index do |wo, i| %>
           <!-- Start open block -->
           <% if wo == tech_orders.first && wo.date_time.seconds_since_midnight >  @start_hour * 3600 %>
