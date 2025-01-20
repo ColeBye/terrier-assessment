@@ -1,73 +1,108 @@
-/*!**/
-/* * This is a manifest file that'll be compiled into application.css.*/
-/* **/
-/* * With Propshaft, assets are served efficiently without preprocessing steps. You can still include*/
-/* * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard*/
-/* * cascading order, meaning styles declared later in the document or manifest will override earlier ones,*/
-/* * depending on specificity.*/
-/* **/
-/* * Consider organizing styles into separate files for maintainability.*/
-/* *!*/
-/*.page-nav {*/
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
 
-/*}*/
+.time-slot {
+    font-weight: bold;
+    width: 7rem;
+    min-width: 7rem;
+    min-height: 8rem;
+    justify-content: center;
+    align-items: center;
+    /*flex-direction: column;*/
+}
 
-/*ul {*/
-/*    list-style-type: none;*/
-/*}*/
+.technician-name {
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
 
-/*li {*/
-/*    display: inline;*/
-/*    width: 60px;*/
-/*    margin: 5px;*/
-/*}*/
+.work-order {
 
-/*.schedule-grid {*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(24, 1fr); !* repeat by num technicians + 1.. can change later to scroll with more techs*!*/
-/*    grid-template-rows: repeat(24, 1fr);  !* repeat by num minutes between first (round down) and last event (rounded up to hours)*!*/
-/*}*/
+}
 
-/*.schedule-header {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    grid-row: 1;*/
-/*    grid-column: 1 / -1;*/
-/*}*/
+.open-time {
+    opacity: 0;
+}
 
-/*.time-labels {*/
-/*    grid-row: 2 / -1;*/
-/*    grid-column: 1;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    margin: 5px;*/
-/*}*/
+.axis-holder {
+    display: grid;
+    grid-template-rows: 5rem 1fr;
+    grid-template-columns: 7rem 1fr;
+    background-color: lightgray;
+    margin: 5vmin;
 
-/*.time-slot {*/
+}
 
-/*}*/
+.new-grid {
+    display: flex;
+    grid-row: 2;
+    grid-column: 2;
 
-/*.technician-name {*/
+}
 
-/*}*/
+.new-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #ececec;
+}
 
-/*.technician-columns {*/
-/*    grid-column: 2 / -1;*/
-/*    grid-row: 2 / -1;*/
-/*    display: flex;*/
+.new-wo{
+    display: flex;
+    padding-left: 3px;
+    min-height: fit-content;
+}
 
-/*}*/
+.corner-square {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 1000;
+}
 
-/*.technician-column {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    margin: 5px;*/
-/*}*/
+.x-axis {
+    grid-row: 1;
+    grid-column: 2;
+    display: flex;
+}
+.y-axis {
+    grid-row: 2;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
-/*.work-order {*/
+.card-time {
 
-/*}*/
+}
 
-/*.open-time {*/
+.card-name {
 
-/*}*/
+}
+
+.card-city {
+
+}
+
+.card-price {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin-top: auto;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    font-weight: bold;
+}

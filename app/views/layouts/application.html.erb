@@ -25,7 +25,7 @@
 
 
 <body>
-<nav class="navbar navbar-static-top navbar-expand-sm navbar-dark bg-dark p-3 mb-50 ">
+<nav class="navbar navbar-expand navbar-dark bg-dark p-3">
   <div class="d-inline-block align-top pl-5">
     <%= image_tag "rails.png", alt: "rails logo", width: 50, height: 50 %>
   </div>
@@ -37,6 +37,11 @@
       <a href="<%= rake_schedule_index_path %>" class="nav-link">Rake</a>
     </li>
   </ul>
+  <div class="form-inline ms-auto ">
+    <a href="https://github.com/ColeBye/terrier-assignment">
+      <%= image_tag "github.png", alt: "github link", width: 50, height: 50 %>
+    </a>
+  </div>
 </nav>
 <%= yield %>
 </body>
