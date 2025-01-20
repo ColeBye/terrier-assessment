@@ -1,8 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script>
+    function popModal(context, total_minutes) {
+        document.getElementById("myModal").style.display = "block";
+        document.getElementById("modal-context").innerText = context;
+
+        let free_time = ""
+        let hours = Math.floor(total_minutes / 60);
+        let minutes = total_minutes % 60
+        if (hours > 1) {
+            free_time += hours + " hours ";
+        }
+        else if (hours === 1) {
+            free_time += "1 hour ";
+        }
+        if (minutes > 1) {
+            free_time += minutes + " minutes";
+        }
+        if (minutes === 1) {
+            free_time += "1 minute";
+        }
+
+        document.getElementById("modal-minutes").innerText = free_time;
+    }
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+  </script>
+
+
   <% content_for :title do %>
     Terrier Scheduler
   <% end %>
+
+  <div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-context">Modal Title</h5>
+          <button type="button" class="btn-close" onclick="closeModal()" ></button>
+        </div>
+        <div class="modal-body" id="modal-minutes">
+          <p>Modal Body</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="axis-holder  border rounded">
 
@@ -39,8 +83,8 @@
           <!-- Start open block -->
           <% if wo == tech_orders.first && wo.date_time.seconds_since_midnight >  @start_hour * 3600 %>
             <% free_duration = wo.date_time.seconds_since_midnight - (@start_hour * 3600)%>
-            <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
-              <label>OPEN TIME</label>
+            <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time to start:\n', parseInt(this.children[0].innerText))">
+              <label><%= (free_duration / 60).to_i %></label>
             </div>
           <% end %>
 
@@ -67,8 +111,8 @@
                 <label class="card-price">$<%= wo.price %></label>
               </div>
               <% if free_duration > 0%>
-                <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
-                  <label><%= free_duration / 60 %></label>
+                <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time between events:\n', parseInt(this.children[0].innerText))">
+                  <label><%= (free_duration / 60).to_i %></label>
                 </div>
               <% end %>
             <% end %>
@@ -85,8 +129,8 @@
             <!-- End open block -->
             <% if wo.date_time.seconds_since_midnight + (wo.duration * 60) < @end_hour * 3600%>
               <% free_duration = @end_hour * 3600 - (wo.date_time.seconds_since_midnight + (wo.duration * 60))%>
-              <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem">
-                <label>OPEN TIMES</label>
+              <div class="open-time card" style="height: <%= free_duration * 8 / 3600 %>rem" onclick="popModal('Time to end:\n', parseInt(this.children[0].innerText))">
+                <label><%= (free_duration / 60).to_i %></label>
               </div>
             <% end %>
           <% end %>
