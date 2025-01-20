@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title><%= content_for(:title) || "Terrier Rails Assessment" %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+  <head>
+    <title><%= content_for(:title) || "Terrier Rails Assessment" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-  <%= yield :head %>
+    <%= yield :head %>
 
-  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-  <link rel="icon" href="/icon.png" type="image/png">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
 
-  <%# Includes all stylesheet files in app/assets/stylesheets %>
-  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</head>
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </head>
 
 
-<body>
-<nav class="navbar navbar-expand navbar-dark bg-dark p-3">
-  <div class="d-inline-block align-top pl-5">
-    <%= image_tag "rails.png", alt: "rails logo", width: 50, height: 50 %>
-  </div>
-  <ul class="navbar-nav">
-    <li class="nav-item active">
-      <a href="<%= schedule_index_path %>" class="nav-link">Schedule</a>
-    </li>
-    <li class="nav-item active">
-      <a href="<%= rake_schedule_index_path %>" class="nav-link">Rake</a>
-    </li>
-  </ul>
-  <div class="form-inline ms-auto ">
-    <a href="https://github.com/ColeBye/terrier-assignment">
-      <%= image_tag "github.png", alt: "github link", width: 50, height: 50 %>
-    </a>
-  </div>
-</nav>
-<%= yield %>
-</body>
+  <body>
+  <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark p-3">
+      <!-- Rails Image -->
+      <div class="d-inline-block align-top pl-5">
+        <%= image_tag "rails.png", alt: "rails logo", width: 50, height: 50 %>
+      </div>
+      <ul class="navbar-nav">
+        <!-- Schedule page link -->
+        <li class="nav-item active">
+          <a href="<%= schedule_index_path %>" class="nav-link">Schedule</a>
+        </li>
+        <!-- Rake page link -->
+        <li class="nav-item active">
+          <a href="<%= rake_schedule_index_path %>" class="nav-link">Rake</a>
+        </li>
+      </ul>
+      <!-- GitHub link -->
+      <div class="form-inline ms-auto ">
+        <a href="https://github.com/ColeBye/terrier-assignment">
+          <%= image_tag "github.png", alt: "github link", width: 50, height: 50 %>
+        </a>
+      </div>
+    </nav>
+    <%= yield %>
+  </body>
 </html>
