@@ -18,7 +18,8 @@ gem "stimulus-rails"
 gem "jbuilder"
 # Required for input reading
 gem "csv"
-
+# For testing
+gem "mutex_m"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
