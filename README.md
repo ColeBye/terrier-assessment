@@ -11,7 +11,7 @@ Versions used to create this project are as follows:
 - Rails - 8.0.1
 - Node.js - 20.9.0
 - Yarn - 1.22.22
-- sqlite3 - >= 2.1
+- postgresql 14.15
 - Bootstrap - 5.3.3
 - Bundler - 2.6.3
 
@@ -33,12 +33,12 @@ BONUS: The project can also be seen hosted on heroku at https://cole-bye-terrier
 
 ### Approach taken:
 The scheduler is my first project in Rails, so I took my time exploring its features and 
-creating small test projects before starting the main project. I choose sqlite for the database 
-because I've used it in previous projects and a small project like this won't be held back by 
-its simplicity. Additionally, I chose to implement two different rake operations for maximum 
-flexibility.  My thought was that developers might be more likely to use the CLI, but users would 
-need the feature available from the front-end.  In the future, the app could even be extended to
-allow user to input multiple spreadsheets for different days and weeks.
+creating small test projects before starting the main project. I initially choose sqlite for the database 
+because I've used it in previous projects and a small project like this wouldn't be held back by 
+its simplicity. Later I switched to postgresql to implement hosting on Heroku. Additionally, I chose 
+to implement two different rake operations for maximum flexibility.  My thought was that developers 
+might be more likely to use the CLI, but users would need the feature available from the front-end. 
+In the future, the app could even be extended to allow user to input multiple spreadsheets for different days and weeks.
 
 ### Challenges faced:
 The main challenge I faced would be hosting on Heroku.  Postgres was throwing BadConnection errors 
