@@ -56,7 +56,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: terrier_pw_test
+  database: terrier_pg_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,18 +81,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: terrier_pw_production
+    database: terrier_pg_production
     username: terrier_pw
     password: <%= ENV["TEST_PW_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: terrier_pw_production_cache
+    database: terrier_pg_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: terrier_pw_production_queue
+    database: terrier_pg_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: terrier_pw_production_cable
+    database: terrier_pg_production_cable
     migrations_paths: db/cable_migrate
