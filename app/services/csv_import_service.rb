@@ -3,7 +3,7 @@ class CsvImportService
 
   def call(work_order_form, technician_form, location_form)
     # Open and parse work order CSV
-    work_order_file = File.open(work_order_form.path)
+    work_order_file = File.read(work_order_form)
     csv = CSV.parse(work_order_file, headers: true, col_sep: ",")
 
     # Create objects to add to database
@@ -21,7 +21,7 @@ class CsvImportService
     end
 
     # Open and parse technician CSV
-    technician_file = File.open(technician_form.path)
+    technician_file = File.read(technician_form.path)
     csv = CSV.parse(technician_file, headers: true, col_sep: ",")
 
     # Create objects to add to database
@@ -35,7 +35,7 @@ class CsvImportService
     end
 
     # Open and parse location CSV
-    location_file = File.open(location_form.path)
+    location_file = File.read(location_form.path)
     csv = CSV.parse(location_file, headers: true, col_sep: ",")
 
     # Create objects to add to database
