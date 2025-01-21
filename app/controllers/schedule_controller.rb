@@ -28,7 +28,7 @@ class ScheduleController < ApplicationController
 
     # Check if all files are input and all files are csv
     return redirect_to rake_schedule_index_path, notice: "Missing File/s" unless work_order_form && technician_form && location_form
-    return redirect_to rake_schedule_index_path, notice: "CSV files only!" unless work_order_form.content_type == "text/csv" && technician_form.content_type == "text/csv" && location_form.content_type == "text/csv"
+    return redirect_to rake_schedule_index_path, notice: "CSV files only!" unless (work_order_form.content_type == "text/csv" || work_order_form.content_type == "application/vnd.ms-excel") && (technician_form.content_type == "text/csv" || technician_form.content_type == "application/vnd.ms-excel") && (location_form.content_type == "text/csv" || location_form.content_type == "application/vnd.ms-excel")
 
     # Adds info from files to the database
     # my_var = File.open(work_order_form)
