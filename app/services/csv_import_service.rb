@@ -21,7 +21,7 @@ class CsvImportService
     end
 
     # Open and parse technician CSV
-    technician_file = File.read(technician_form.path)
+    technician_file = File.read(technician_form)
     csv = CSV.parse(technician_file, headers: true, col_sep: ",")
 
     # Create objects to add to database
@@ -35,7 +35,7 @@ class CsvImportService
     end
 
     # Open and parse location CSV
-    location_file = File.read(location_form.path)
+    location_file = File.read(location_form)
     csv = CSV.parse(location_file, headers: true, col_sep: ",")
 
     # Create objects to add to database
