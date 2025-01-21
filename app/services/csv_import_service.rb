@@ -8,7 +8,7 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      unless WorkOrder.where(order_id: row["order_id"]).exists?
+      unless WorkOrder.where(order_id: row[0]).exists?
         work_order_hash = {}
         work_order_hash[:order_id] = row[0]
         work_order_hash[:technician] = row["technician_id"]
@@ -26,7 +26,7 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      unless Technician.where(technician_id: row["technician_id"]).exists?
+      unless Technician.where(technician_id: row[0]).exists?
         technician_hash = {}
         technician_hash[:technician_id] = row[0]
         technician_hash[:name] = row["name"]
@@ -40,7 +40,7 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      unless Location.where(location_id: row["location_id"]).exists?
+      unless Location.where(location_id: row[0]).exists?
         location_hash = {}
         location_hash[:location_id] = row[0]
         location_hash[:name] = row["name"]
