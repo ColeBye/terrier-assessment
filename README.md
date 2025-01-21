@@ -25,7 +25,9 @@ Steps to run this application on a new machine are as follows:
 4. Navigate to `localhost:3000` in a web browser
 5. Use one of the following methods to rake .csv files into the database
    - Place files in their corresponding form inputs on the rake page
-   - On the command line, run `rake "csv_input:import_csv[WORK_ORDER_INPUT_FILE, TECHNICIANS_INPUT_FILE, LOCATIONS_INPUT_FILE]"`, replacing the bracketed arguments with their corresponding files
+   - On the command line, place the files in the tmp older and run `rake "csv_input:import_csv[WORK_ORDER_INPUT_FILE, TECHNICIANS_INPUT_FILE, LOCATIONS_INPUT_FILE]"`, replacing the bracketed arguments with their corresponding files
+
+BONUS: The project can also be seen hosted on heroku at https://cole-bye-terrier-4c256193c8c9.herokuapp.com/
 
 ## Additional Comments
 
@@ -39,11 +41,9 @@ need the feature available from the front-end.  In the future, the app could eve
 allow user to input multiple spreadsheets for different days and weeks.
 
 ### Challenges faced:
-The main challenge I faced would be hosting on Heroku.  I was able to get the project 
-running locally with postgresql (required for heroku), but I ran into trouble when I tried 
-to deploy. Postgres is throwing BadConnection errors and refusing to connect. I've spent some 
-time digging around in config files and the firewall, but due to time constrains I've decided 
-to revert back to the local sqlite version for the time being.  
+The main challenge I faced would be hosting on Heroku.  Postgres was throwing BadConnection errors 
+and refusing to connect. I spent some time digging around in config files and file permissions and 
+eventually got it to work.
 
 ### Possible improvements:
 

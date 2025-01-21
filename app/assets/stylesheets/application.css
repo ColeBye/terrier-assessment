@@ -13,6 +13,7 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
+    overflow: hidden;
 }
 
 .schedule-grid {
@@ -33,6 +34,7 @@
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    overflow: hidden;
 }
 
 .y-axis {
@@ -50,6 +52,7 @@
     min-height: 8rem;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .date-corner {
@@ -92,9 +95,16 @@
     margin-bottom: 2px;
     margin-right: 2px;
     font-weight: bold;
-    overflow: visible;
+    overflow-y: visible;
+}
+.card-price::-webkit-scrollbar {
+    display: none;
 }
 
 .card {
-    overflow: scroll;
+    overflow-y: auto;
+}
+
+.card::-webkit-scrollbar {
+    display: none;
 }
