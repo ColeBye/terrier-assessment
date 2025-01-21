@@ -8,14 +8,16 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      work_order_hash = {}
-      work_order_hash[:order_id] = row[0]
-      work_order_hash[:technician] = row["technician_id"]
-      work_order_hash[:location] = row["location_id"]
-      work_order_hash[:duration] = row["duration"]
-      work_order_hash[:price] = row["price"]
-      work_order_hash[:date_time] = row["time"]
-      WorkOrder.create(work_order_hash)
+      unless WorkOrder.where(order_id: row["order_id"]).exists?
+        work_order_hash = {}
+        work_order_hash[:order_id] = row[0]
+        work_order_hash[:technician] = row["technician_id"]
+        work_order_hash[:location] = row["location_id"]
+        work_order_hash[:duration] = row["duration"]
+        work_order_hash[:price] = row["price"]
+        work_order_hash[:date_time] = row["time"]
+        WorkOrder.create(work_order_hash)
+      end
     end
 
     # Open and parse technician CSV
@@ -24,10 +26,12 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      technician_hash = {}
-      technician_hash[:technician_id] = row[0]
-      technician_hash[:name] = row["name"]
-      Technician.create(technician_hash)
+      unless Technician.where(technician_id: row[0]).exists?
+        technician_hash = {}
+        technician_hash[:technician_id] = row[0]
+        technician_hash[:name] = row["name"]
+        Technician.create(technician_hash)
+      end
     end
 
     # Open and parse location CSV
@@ -36,11 +40,13 @@ class CsvImportService
 
     # Create objects to add to database
     csv.each do |row|
-      location_hash = {}
-      location_hash[:location_id] = row[0]
-      location_hash[:name] = row["name"]
-      location_hash[:city] = row["city"]
-      Location.create(location_hash)
+      unless Location.where(location_id: row[0]).exists?
+        location_hash = {}
+        location_hash[:location_id] = row[0]
+        location_hash[:name] = row["name"]
+        location_hash[:city] = row["city"]
+        Location.create(location_hash)
+      end
     end
   end
 end
