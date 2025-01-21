@@ -25,7 +25,7 @@ Steps to run this application on a new machine are as follows:
 4. Navigate to `localhost:3000` in a web browser
 5. Use one of the following methods to rake .csv files into the database
    - Place files in their corresponding form inputs on the rake page
-   - On the command line, run `rake "csv_input:import_csv[WORK_ORDER_INPUT_FILE, TECHNICIANS_INPUT_FILE, LOCATIONS_INPUT_FILE]"`, replacing the bracketed arguments with their corresponding files
+   - On the command line, place the files in the tmp older and run `rake "csv_input:import_csv[WORK_ORDER_INPUT_FILE, TECHNICIANS_INPUT_FILE, LOCATIONS_INPUT_FILE]"`, replacing the bracketed arguments with their corresponding files
 
 ## Additional Comments
 
