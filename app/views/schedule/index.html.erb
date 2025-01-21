@@ -120,7 +120,7 @@
 
               <%# Case with no conflict %>
               <!-- Work order event -->
-              <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem">
+              <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem; background-color: lightblue">
                 <% order_location = Location.where(location_id: work_order.location).first %>
                 <label class="card-time bold"><%= work_order.date_time.strftime("%r") %></label>
                 <label class="card-name text-muted"><%= order_location.name %></label>
@@ -139,7 +139,7 @@
           <%# Technicians last order case %>
           <% else %>
             <!-- Work order event -->
-            <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem">
+            <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem; background-color: lightblue">
               <% order_location = Location.where(location_id: work_order.location).first %>
               <label class="card-time"><%= work_order.date_time.strftime("%r") %></label>
               <label class="card-name"><%= order_location.name %></label>
