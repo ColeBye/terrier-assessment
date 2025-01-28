@@ -31,9 +31,7 @@ class ScheduleController < ApplicationController
     return redirect_to rake_schedule_index_path, notice: "CSV files only!" unless (work_order_form.content_type == "text/csv" || work_order_form.content_type == "application/vnd.ms-excel") && (technician_form.content_type == "text/csv" || technician_form.content_type == "application/vnd.ms-excel") && (location_form.content_type == "text/csv" || location_form.content_type == "application/vnd.ms-excel")
 
     # Adds info from files to the database
-    # my_var = File.open(work_order_form)
-    # or .path
-    CsvImportService.new.call(work_order_form.path, technician_form.tempfile, location_form.tempfile)
+    CsvImportService.new.call(work_order_form.tempfile, technician_form.tempfile, location_form.tempfile)
 
     redirect_to schedule_index_path
   end
