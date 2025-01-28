@@ -20,7 +20,7 @@ Versions used to create this project are as follows:
 
 Steps to run this application on a new machine are as follows:
 1. Install dependencies listed above
-2. Download files the source files from and navigate to the project folder
+2. Download files the source files and navigate to the project folder
 3. Run `bin/setup`
 4. Navigate to `localhost:3000` in a web browser
 5. Use one of the following methods to rake .csv files into the database
