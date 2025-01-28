@@ -16,4 +16,3 @@ namespace :csv_input do
 end
 
 # Usage: rake "csv_input:import_csv[work_orders.csv, technicians.csv, locations.csv]"
-# #{Rails.root}/mp/filename.csv
