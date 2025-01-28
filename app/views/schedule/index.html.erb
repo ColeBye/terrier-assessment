@@ -142,7 +142,7 @@
             <div class="work-order card" style="height: <%= work_order.duration * 8 / 60%>rem; background-color: lightblue">
               <% order_location = Location.where(location_id: work_order.location).first %>
               <label class="card-time"><%= work_order.date_time.strftime("%r") %></label>
-              <label class="card-name"><%= order_location.name %></label>
+              <label class="card-name text-muted"><%= order_location.name %></label>
               <label class="card-city"><%= order_location.city %></label>
               <label class="card-price">$<%= work_order.price %></label>
             </div>
