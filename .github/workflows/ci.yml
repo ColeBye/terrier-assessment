@@ -43,7 +43,7 @@ jobs:
     services:
       postgres:
         env:
-          POSTGRES_HOST_AUTH_METHOD_TRUST: trust
+          POSTGRES_PASSWORD: postgres
         image: postgres:14
         ports:
           - 5432:5432
